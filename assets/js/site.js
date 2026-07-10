@@ -3,7 +3,7 @@
 
   const root = document.documentElement.dataset.root || ".";
   const locale = document.documentElement.lang === "ja" ? "ja" : "en";
-  const mePattern = locale === "ja" ? /(丹治\s*和史|丹治和史)/g : /(Kazufumi Tanji|Tanji, Kazufumi)/g;
+  const mePattern = /(丹治\s*和史|丹治和史|Kazufumi Tanji|Tanji, Kazufumi)/g;
 
   const escapeHtml = (value = "") => value.replace(/[&<>"']/g, char => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"

@@ -126,7 +126,7 @@
     const links = [];
     if (item.doi) links.push(`<a href="https://doi.org/${encodeURIComponent(item.doi)}">DOI</a>`);
     if (item.eprint) links.push(`<a href="https://arxiv.org/abs/${encodeURIComponent(item.eprint)}">arXiv:${escapeHtml(item.eprint)}</a>`);
-    return `<article class="entry"><div class="entry-year">${escapeHtml(item.year)}</div><div><h3>${escapeHtml(item.title)}</h3><p class="authors">${underlineMe(formatBibAuthors(item.author))}</p>${identifier ? `<p class="meta">${escapeHtml(identifier)}</p>` : ""}${links.length ? `<p class="entry-links">${links.join("")}</p>` : ""}</div></article>`;
+    return `<article class="entry"><div class="entry-year">${escapeHtml(item.year)}</div><div><h3>${escapeHtml(item.title)}</h3><p class="authors">${underlineMe(formatBibAuthors(item.author))}</p>${identifier ? `<p class="meta">${escapeHtml(identifier)}${item.note ? ` <span class="publication-note">${escapeHtml(item.note)}</span>` : ""}</p>` : ""}${links.length ? `<p class="entry-links">${links.join("")}</p>` : ""}</div></article>`;
   }
 
   function publicationGroupsHtml(items) {

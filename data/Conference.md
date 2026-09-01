@@ -13,8 +13,8 @@
 | Eitaro Ishikawa, Shin Nishio, Koichiro Miyanishi, Kazufumi Tanji, Isamu Kudo, Masahiro Takeoka, Hiroki Takahashi, and Takahiko Satoh | Transport-Aware Syndrome Measurement Circuit Compiler for 1D QCCD Architecture | Asian Conference on Trapped Ions 2026 (ACTI2026) | National University of Singapore, Singapore | 2026, April 20-22 | Poster |
 | Issei Matsuzoe, Kazufumi Tanji, Wojciech Roga, and Masahiro Takeoka | QRT-Integrated GRAPE to Optimize Photon Waveforms from Two Non-Identical Cavity-QED Emitters | 2026 Conference on Lasers and Electro-Optics (CLEO2026) | Charlotte, North Carolina, USA | 2026, May 17-21 | Poster |
 | Shohei Kiryu, Kazufumi Tanji, Yoshida Ueda, and Makoto Takeoka | The metrological cost of heralded non-Gaussian optical states | Conference on Quantum Information (CQI) 2026 | Seoul, Korea | 2026, July 1-3 | Poster |
-| Haruki Aoki, Shohei Kiryu, Kazufumi Tanji, Masahiro Takeoka, and Junko Ishi-Hayase | Quantum Error Correction Code for Thermal Bosonic States | Conference on Quantum Information (CQI) 2026 | Seoul, Korea | 2026, July 1-3 | 2026 |
-| Isamu Kudo, Kazufumi Tanji, Masahiro Takeoka and Tsuyoshi Yoshida | Benchmarking Distributed Concatenated Steane Codes with Remote CNOT Gates | The 26th Asian Quantum Information Science (AQIS2026) | Daejeon, Korea | 2026, August 24-28 | 2026 |
+| Haruki Aoki, Shohei Kiryu, Kazufumi Tanji, Masahiro Takeoka, and Junko Ishi-Hayase | Quantum Error Correction Code for Thermal Bosonic States | Conference on Quantum Information (CQI) 2026 | Seoul, Korea | 2026, July 1-3 | Poster |
+| Isamu Kudo, Kazufumi Tanji, Masahiro Takeoka and Tsuyoshi Yoshida | Benchmarking Distributed Concatenated Steane Codes with Remote CNOT Gates | The 26th Asian Quantum Information Science (AQIS2026) | Daejeon, Korea | 2026, August 24-28 | Poster |
 
 # Japanese conference
 | Author | Title | Conference | Place | Year and Date | Talk / Poster |

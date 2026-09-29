@@ -17,11 +17,13 @@
 | Isamu Kudo, Kazufumi Tanji, Masahiro Takeoka and Tsuyoshi Yoshida | Benchmarking Distributed Concatenated Steane Codes with Remote CNOT Gates | The 26th Asian Quantum Information Science (AQIS2026) | Daejeon, Korea | 2026, August 24-28 | Poster |
 
 # Japanese conference
-| Author | Title | Conference | Place | Year and Date | Talk / Poster |
-| 丹治 和史，Wojciech Roga，高橋 優樹，武岡 正裕 | 離れたイオン-共振器系でのエンタングルメント生成における励起パルス波形の最適化 | 第47回量子情報技術研究会（QIT47） | 慶應義塾大学，神奈川 | 2022年12月8-9日 | Poster |
-| 鈴木 一樹, 鈴木 泰成, 丹治 和史, 徳永 裕己, 武岡 正裕 | 量子誤り訂正された遠隔量子ゲートの現実的な量子ノイズを考慮した数値シミュレーション | 第51回量子情報技術研究会 (QIT51) | サンポートホール高松，香川 | 2024年 11月26日-28日 | Poster |
-| 丹治 和史，清水 耀，武岡 正裕 | 光子数基底の重ね合わせを用いた高次元ベル測定とエンタングルメントスワッピング | 第52回量子情報技術研究会（QIT52）| 静岡大学浜松キャンパス，静岡 | 2025年5月28日-30日 | Talk |
-| 丹治 和史，Dot B Pio，桐生 翔平，Ulrik L.  Andersen，武岡 正裕 | ガウス分解を用いた非ガウス操作の効率的シミュレーション | 第54回量子情報技術研究会(QIT54) | シンフォニアテクノロジー響ホール伊勢，三重 | 2026年5月27-29日 | Talk |
-| 松添壱成，丹治和史，ロガ ヴォイチェフ，武岡正裕 | 開放量子系の二時刻相関関数に対するGRAPE型最適制御法 | 第54回量子情報技術研究会(QIT54) | シンフォニアテクノロジー響ホール伊勢，三重 | 2026年5月27-29日 | Talk |
-| 青木陽，丹治 和史，桐生 翔平，武岡 正裕 ，早瀬 潤子 | 遠隔イオントラップ間のGottesman -Kitaev -Preskillもつれ生成 | 第54回量子情報技術研究会(QIT54) | シンフォニアテクノロジー響ホール伊勢，三重 | 2026年5月27-29日 | Talk |
-| 平井希空，丹治和史，宮西孝一郎，工藤　勇，西尾　真，佐藤貴彦，高橋優樹，武岡正裕 | 量子エラー訂正のための量子プロセストモグラフィーを用いた，Mølmer-Sørensenゲートにおけるノイズの数値解析 | 第54回量子情報技術研究会(QIT54) | シンフォニアテクノロジー響ホール伊勢，三重 | 2026年5月27-29日 | Talk |
+| Author | Title | English Title | Conference | Place | Year and Date | Talk / Poster |
+| 丹治 和史，Wojciech Roga，高橋 優樹，武岡 正裕 | 離れたイオン-共振器系でのエンタングルメント生成における励起パルス波形の最適化 | Optimizing the driving pulse waveform for entanglement generation between distant ion-cavity systems | 第47回量子情報技術研究会（QIT47） | 慶應義塾大学，神奈川 | 2022年12月8-9日 | Poster |
+| 鈴木 一樹, 鈴木 泰成, 丹治 和史, 徳永 裕己, 武岡 正裕 | 量子誤り訂正された遠隔量子ゲートの現実的な量子ノイズを考慮した数値シミュレーション | Numerical simulation of quantum error corrected remote quantum gate on realistic noise model | 第51回量子情報技術研究会 (QIT51) | サンポートホール高松，香川 | 2024年 11月26日-28日 | Poster |
+| 丹治 和史，清水 耀，武岡 正裕 | 光子数基底の重ね合わせを用いた高次元ベル測定とエンタングルメントスワッピング | High-Dimensional Bell Measurement and Entanglement Swapping with Photon-Number Basis | 第52回量子情報技術研究会（QIT52）| 静岡大学浜松キャンパス，静岡 | 2025年5月28日-30日 | Talk |
+| 丹治 和史，Dot B Pio，桐生 翔平，Ulrik L.  Andersen，武岡 正裕 | ガウス分解を用いた非ガウス操作の効率的シミュレーション | Fast Simulation of Non-Gaussian Operation with Gaussian Decomposition | 第54回量子情報技術研究会(QIT54) | シンフォニアテクノロジー響ホール伊勢，三重 | 2026年5月27-29日 | Talk |
+| 松添壱成，丹治和史，ロガ ヴォイチェフ，武岡正裕 | 開放量子系の二時刻相関関数に対するGRAPE型最適制御法 | Gradient Ascent Pulse Engineering for Two-Time Correlations in Open Quantum Systems | 第54回量子情報技術研究会(QIT54) | シンフォニアテクノロジー響ホール伊勢，三重 | 2026年5月27-29日 | Talk |
+| 青木陽，丹治 和史，桐生 翔平，武岡 正裕 ，早瀬 潤子 | 遠隔イオントラップ間のGottesman -Kitaev -Preskillもつれ生成 | Remote Gottesman-Kitaev-Preskill Entanglement Generation between Trapped Ions | 第54回量子情報技術研究会(QIT54) | シンフォニアテクノロジー響ホール伊勢，三重 | 2026年5月27-29日 | Talk |
+| 平井希空，丹治和史，宮西孝一郎，工藤　勇，西尾　真，佐藤貴彦，高橋優樹，武岡正裕 | 量子エラー訂正のための量子プロセストモグラフィーを用いた，Mølmer-Sørensenゲートにおけるノイズの数値解析 | Numerical Analysis of Noise in Mølmer-Sørensen Gates via Quantum Process Tomography for Quantum Error Correction | 第54回量子情報技術研究会(QIT54) | シンフォニアテクノロジー響ホール伊勢，三重 | 2026年5月27-29日 | Talk |
+| 桐生翔平，青木陽，丹治和史，武岡正裕 | 線形光学を用いた三成分猫状態の生成とベル測定 | Linear-optical generation and Bell measurement of three-component cat states | 第87回応用物理学会秋季学術講演会 | 北海道大学札幌キャンパス，北海道 | 2026年9月8日-11日 | Talk |
+| 青木陽，桐生翔平，丹治和史，武岡 正裕，早瀬 潤子 | 基底状態冷却が不要な連続量量子誤り訂正符号 | A Continuous-Variable Quantum Error-Correcting Code without Ground-State Cooling | 日本物理学会　第81回年次大会 | 東京大学駒場キャンパス，東京 | 2026年9月14日-17日 | Talk |

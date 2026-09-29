@@ -17,19 +17,10 @@
     return parts.length === 2 ? `${parts[1]} ${parts[0]}` : name.trim();
   }).join(", ");
 
-  const conferenceEnglish = {
-    "離れたイオン-共振器系でのエンタングルメント生成における励起パルス波形の最適化": "Optimizing the driving pulse waveform for entanglement generation between distant ion-cavity systems",
-    "量子誤り訂正された遠隔量子ゲートの現実的な量子ノイズを考慮した数値シミュレーション": "Numerical simulation of quantum error corrected remote quantum gate on realistic noise model",
-    "光子数基底の重ね合わせを用いた高次元ベル測定とエンタングルメントスワッピング": "High-Dimensional Bell Measurement and Entanglement Swapping with Photon-Number Basis",
-    "ガウス分解を用いた非ガウス操作の効率的シミュレーション": "Fast Simulation of Non-Gaussian Operation with Gaussian Decomposition",
-    "開放量子系の二時刻相関関数に対するGRAPE型最適制御法": "Gradient Ascent Pulse Engineering for Two-Time Correlations in Open Quantum Systems",
-    "遠隔イオントラップ間のGottesman -Kitaev -Preskillもつれ生成": "Remote Gottesman-Kitaev-Preskill Entanglement Generation between Trapped Ions",
-    "量子エラー訂正のための量子プロセストモグラフィーを用いた，Mølmer-Sørensenゲートにおけるノイズの数値解析": "Numerical Analysis of Noise in Mølmer-Sørensen Gates via Quantum Process Tomography for Quantum Error Correction"
-  };
   const authorEnglish = {
     "丹治 和史": "Kazufumi Tanji", "丹治和史": "Kazufumi Tanji", "清水 耀": "Hikaru Shimizu", "武岡 正裕": "Masahiro Takeoka", "武岡正裕": "Masahiro Takeoka",
     "高橋 優樹": "Hiroki Takahashi", "Wojciech Roga": "Wojciech Roga", "鈴木 一樹": "Kazuki Suzuki", "鈴木 泰成": "Yasunari Suzuki", "徳永 裕己": "Hiroki Tokunaga",
-    "Dot B. Pio": "Dot B. Pio", "桐生 翔平": "Shohei Kiryu", "Ulrik L.  Andersen": "Ulrik L. Andersen", "松添壱成": "Issei Matsuzoe", "ロガ ヴォイチェフ": "Wojciech Roga",
+    "Dot B. Pio": "Dot B. Pio", "桐生 翔平": "Shohei Kiryu", "桐生翔平": "Shohei Kiryu", "Ulrik L.  Andersen": "Ulrik L. Andersen", "松添壱成": "Issei Matsuzoe", "ロガ ヴォイチェフ": "Wojciech Roga",
     "青木陽": "Haruki Aoki", "早瀬 潤子": "Junko Ishi-Hayase", "平井希空": "Noah Hirai", "宮西孝一郎": "Koichiro Miyanishi", "工藤　勇": "Isamu Kudo", "西尾　真": "Shin Nishio", "佐藤貴彦": "Takahiko Satoh", "高橋優樹": "Hiroki Takahashi"
   };
   function translateAuthors(value) {
@@ -63,6 +54,19 @@
       return value;
     }
     return `${monthNames[Number(month)]} ${startDay}${endDay ? `–${endMonth ? `${endMonth} ` : ""}${endDay}` : ""}, ${year}`;
+  }
+
+  function publicationDateKey(item) {
+    const months = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
+    const monthValue = (item.month || "").trim().toLowerCase();
+    let month = /^\d{1,2}$/.test(monthValue) ? Number(monthValue) : months.indexOf(monthValue.slice(0, 3)) + 1;
+    if (month < 1 || month > 12) month = 0;
+    // Use the arXiv submission month only for unpublished preprints.
+    if (!month && item.entryType === "misc" && !item.journal && !item.doi) {
+      const arxiv = (item.eprint || "").match(/^(\d{2})(0[1-9]|1[0-2])\.\d+/);
+      if (arxiv && 2000 + Number(arxiv[1]) === Number(item.year)) month = Number(arxiv[2]);
+    }
+    return Number(item.year) * 100 + month;
   }
 
   function parseBib(text) {
@@ -107,7 +111,7 @@
       }
       entries.push(fields); start = end;
     }
-    return entries.sort((a, b) => Number(b.year) - Number(a.year));
+    return entries.sort((a, b) => publicationDateKey(b) - publicationDateKey(a));
   }
 
   function publicationHtml(item) {
@@ -125,7 +129,7 @@
     }
     const links = [];
     if (item.doi) links.push(`<a href="https://doi.org/${encodeURIComponent(item.doi)}">DOI</a>`);
-    if (item.eprint) links.push(`<a href="https://arxiv.org/abs/${encodeURIComponent(item.eprint)}">arXiv:${escapeHtml(item.eprint)}</a>`);
+    if (item.eprint) links.push(`<a href="https://arxiv.org/abs/${encodeURIComponent(item.eprint)}">arXiv</a>`);
     return `<article class="entry"><div class="entry-year">${escapeHtml(item.year)}</div><div><h3>${escapeHtml(item.title)}</h3><p class="authors">${underlineMe(formatBibAuthors(item.author))}</p>${identifier ? `<p class="meta">${escapeHtml(identifier)}${item.note ? ` <span class="publication-note">${escapeHtml(item.note)}</span>` : ""}</p>` : ""}${links.length ? `<p class="entry-links">${links.join("")}</p>` : ""}</div></article>`;
   }
 
@@ -144,16 +148,18 @@
       if (line.startsWith("# ")) category = line.slice(2).trim();
       if (!line.startsWith("|") || line.includes("|---") || line.includes("| Author |")) continue;
       const cells = line.split("|").slice(1, -1).map(cell => cell.trim());
-      if (cells.length !== 6) continue;
+      const hasEnglishTitle = category === "Japanese conference" && cells.length === 7;
+      if (cells.length !== 6 && !hasEnglishTitle) continue;
+      const englishTitle = hasEnglishTitle ? cells.splice(2, 1)[0] : "";
       const year = (cells[4].match(/\b(20\d{2})\b/) || ["", ""])[1];
-      rows.push({ category, author: cells[0], title: cells[1], conference: cells[2], place: cells[3], date: cells[4], type: cells[5], year });
+      rows.push({ category, author: cells[0], title: cells[1], englishTitle, conference: cells[2], place: cells[3], date: cells[4], type: cells[5], year });
     }
     return rows.sort((a, b) => dateKey(b.date) - dateKey(a.date));
   }
 
   function conferenceHtml(item) {
     const domestic = item.category === "Japanese conference";
-    const title = locale === "en" && domestic ? conferenceEnglish[item.title] || item.title : item.title;
+    const title = locale === "en" && domestic ? item.englishTitle || item.title : item.title;
     const authors = locale === "en" && domestic ? translateAuthors(item.author) : item.author.replace(/[，,]\s*/g, ", ").replace(/\s{2,}/g, " ");
     const normalizedConference = item.conference.replace(/第(\d+)回量子情報技術研究会\s*[（(]\s*(QIT\d+)\s*[）)]/g, "第$1回量子情報技術研究会（$2）");
     const conference = locale === "en" && domestic ? item.conference.replace(/第(\d+)回量子情報技術研究会\s*[（(]\s*(QIT\d+)\s*[）)]/g, (_, number, short) => `The ${ordinal(number)} Quantum Information Technology Symposium (${short})`) : normalizedConference;
@@ -164,11 +170,11 @@
   }
 
   function conferenceGroupsHtml(items) {
-    const nonPeerReviewed = items.filter(item => /\bQIT\d+\b/i.test(item.conference));
-    const peerReviewed = items.filter(item => !/\bQIT\d+\b/i.test(item.conference));
-    const peerReviewedLabel = locale === "ja" ? "査読あり" : "Peer-reviewed";
-    const nonPeerReviewedLabel = locale === "ja" ? "査読なし" : "Non-peer-reviewed";
-    return `<section class="conference-group" aria-labelledby="peer-reviewed-heading"><h3 id="peer-reviewed-heading" class="subsection-title">${peerReviewedLabel}</h3><div class="entries">${peerReviewed.map(conferenceHtml).join("")}</div></section><section class="conference-group" aria-labelledby="non-peer-reviewed-heading"><h3 id="non-peer-reviewed-heading" class="subsection-title">${nonPeerReviewedLabel}</h3><div class="entries">${nonPeerReviewed.map(conferenceHtml).join("")}</div></section>`;
+    const international = items.filter(item => item.category === "International Conference");
+    const japanese = items.filter(item => item.category === "Japanese conference");
+    const internationalLabel = locale === "ja" ? "国際会議" : "International Conference";
+    const japaneseLabel = locale === "ja" ? "国内会議" : "Japanese Conference";
+    return `<section class="conference-group" aria-labelledby="international-conference-heading"><h3 id="international-conference-heading" class="subsection-title">${internationalLabel}</h3><div class="entries">${international.map(conferenceHtml).join("")}</div></section><section class="conference-group" aria-labelledby="japanese-conference-heading"><h3 id="japanese-conference-heading" class="subsection-title">${japaneseLabel}</h3><div class="entries">${japanese.map(conferenceHtml).join("")}</div></section>`;
   }
 
   async function loadData(path, targetId, parser, renderer, renderWholeList = false) {

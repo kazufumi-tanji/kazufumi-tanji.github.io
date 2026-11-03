@@ -147,12 +147,17 @@
     for (const line of text.split(/\r?\n/)) {
       if (line.startsWith("# ")) category = line.slice(2).trim();
       if (!line.startsWith("|") || line.includes("|---") || line.includes("| Author |")) continue;
-      const cells = line.split("|").slice(1, -1).map(cell => cell.trim());
-      const hasEnglishTitle = category === "Japanese conference" && cells.length === 7;
-      if (cells.length !== 6 && !hasEnglishTitle) continue;
+      const cells = line.split("|").slice(1).map(cell => cell.trim());
+      if (cells[cells.length - 1] === "") cells.pop();
+      const hasEnglishTitle = category === "Japanese conference";
+      const baseLength = hasEnglishTitle ? 7 : 6;
+      if (cells.length !== baseLength && cells.length !== baseLength + 1) continue;
       const englishTitle = hasEnglishTitle ? cells.splice(2, 1)[0] : "";
+      // Optional last column: "award <official URL>"
+      const awardMatch = (cells[6] || "").match(/^award\b\s*(\S*)/i);
+      const award = awardMatch ? { url: awardMatch[1] } : null;
       const year = (cells[4].match(/\b(20\d{2})\b/) || ["", ""])[1];
-      rows.push({ category, author: cells[0], title: cells[1], englishTitle, conference: cells[2], place: cells[3], date: cells[4], type: cells[5], year });
+      rows.push({ category, author: cells[0], title: cells[1], englishTitle, conference: cells[2], place: cells[3], date: cells[4], type: cells[5], award, year });
     }
     return rows.sort((a, b) => dateKey(b.date) - dateKey(a.date));
   }
@@ -166,7 +171,15 @@
     const placeTranslations = { "慶應義塾大学，神奈川": "Keio University, Kanagawa, Japan", "サンポートホール高松，香川": "Sunport Hall Takamatsu, Kagawa, Japan", "静岡大学浜松キャンパス，静岡": "Shizuoka University Hamamatsu Campus, Shizuoka, Japan", "シンフォニアテクノロジー響ホール伊勢，三重": "Sinfonia Technology Hibiki Hall Ise, Mie, Japan" };
     const place = locale === "en" && domestic ? placeTranslations[item.place] || item.place : item.place;
     const type = locale === "ja" ? ({ Talk: "口頭発表", Poster: "ポスター発表" }[item.type] || item.type) : item.type;
-    return `<article class="entry"><div class="entry-year">${escapeHtml(formatConferenceDate(item.date))}</div><div><h3>${escapeHtml(title)}</h3><p class="authors">${underlineMe(authors)}</p><p class="meta">${escapeHtml(conference)} · ${escapeHtml(place)} · ${escapeHtml(type)}</p></div></article>`;
+    let awardBadge = "";
+    if (item.award) {
+      // The first author is the presenter; awards to co-presented work are marked as co-author.
+      const coAuthor = !new RegExp(mePattern.source).test(item.author.split(/[，,]/)[0]);
+      const label = locale === "ja" ? (coAuthor ? "受賞（共著）" : "受賞") : (coAuthor ? "Award (co-author)" : "Award");
+      const url = /^https?:\/\//.test(item.award.url) ? item.award.url : "";
+      awardBadge = ` ${url ? `<a class="award-note" href="${escapeHtml(url)}">${label}</a>` : `<span class="award-note">${label}</span>`}`;
+    }
+    return `<article class="entry"><div class="entry-year">${escapeHtml(formatConferenceDate(item.date))}</div><div><h3>${escapeHtml(title)}</h3><p class="authors">${underlineMe(authors)}</p><p class="meta">${escapeHtml(conference)} · ${escapeHtml(place)} · ${escapeHtml(type)}${awardBadge}</p></div></article>`;
   }
 
   function conferenceGroupsHtml(items) {

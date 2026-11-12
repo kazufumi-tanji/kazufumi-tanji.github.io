@@ -121,7 +121,9 @@
       identifier = `${item.journal}${item.volume ? ` ${item.volume}` : ""}${item.pages ? `, ${item.pages}` : ""} (${item.year})`;
     } else if (item.booktitle) {
       const proceedings = item.booktitle.replace(/\s*\(20\d{2}\),?\s*Paper\s+\S+\s*$/, "");
-      identifier = `${proceedings}${item.volume ? ` ${item.volume}` : ""}${item.pages ? `, ${item.pages}` : ""} (${item.year})`;
+      identifier = item.series
+        ? `${item.series}${item.volume ? ` ${item.volume}` : ""}, ${proceedings}${item.pages ? `, ${item.pages}` : ""} (${item.year})`
+        : `${proceedings}${item.volume ? ` ${item.volume}` : ""}${item.pages ? `, ${item.pages}` : ""} (${item.year})`;
     } else if (item.eprint) {
       identifier = `arXiv:${item.eprint} (${item.year})`;
     } else if (venue) {

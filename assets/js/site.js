@@ -12,10 +12,18 @@
   const cleanBib = value => value
     .replace(/\{\{([^{}]+)\}\}/g, "$1").replace(/\{([^{}]+)\}/g, "$1")
     .replace(/---/g, "—").replace(/--/g, "–").trim();
-  const formatBibAuthors = value => value.split(/\s+and\s+/).map(name => {
+  const bibAuthorList = value => value.split(/\s+and\s+/).map(name => {
     const parts = name.split(",").map(part => part.trim());
     return parts.length === 2 ? `${parts[1]} ${parts[0]}` : name.trim();
-  }).join(", ");
+  });
+  const initialsKey = value => value.replace(/[^A-Za-z]/g, "").toUpperCase();
+  const authorInitials = name => initialsKey(name.split(/[\s-]+/).filter(Boolean).map(part => part[0]).join(""));
+  // Notes such as "I.M. and K.T. contributed equally" mark matching authors with an asterisk.
+  function splitEqualContribution(note = "") {
+    const match = note.match(/^\s*(.+?)\s+contributed\s+equally\.?\s*$/i);
+    if (!match) return null;
+    return match[1].split(/\s*(?:,\s*and|,|\band\b|&)\s*/i).map(initialsKey).filter(Boolean);
+  }
 
   const authorEnglish = {
     "丹治 和史": "Kazufumi Tanji", "丹治和史": "Kazufumi Tanji", "清水 耀": "Hikaru Shimizu", "武岡 正裕": "Masahiro Takeoka", "武岡正裕": "Masahiro Takeoka",
@@ -132,7 +140,11 @@
     const links = [];
     if (item.doi) links.push(`<a href="https://doi.org/${encodeURIComponent(item.doi)}">DOI</a>`);
     if (item.eprint) links.push(`<a href="https://arxiv.org/abs/${encodeURIComponent(item.eprint)}">arXiv</a>`);
-    return `<article class="entry"><div class="entry-year">${escapeHtml(item.year)}</div><div><h3>${escapeHtml(item.title)}</h3><p class="authors">${underlineMe(formatBibAuthors(item.author))}</p>${identifier ? `<p class="meta">${escapeHtml(identifier)}${item.note ? ` <span class="publication-note">${escapeHtml(item.note)}</span>` : ""}</p>` : ""}${links.length ? `<p class="entry-links">${links.join("")}</p>` : ""}</div></article>`;
+    const equal = splitEqualContribution(item.note);
+    const note = equal ? "" : item.note;
+    const authors = bibAuthorList(item.author || "").map(name => equal && equal.includes(authorInitials(name)) ? `${name}*` : name).join(", ");
+    const equalNote = equal ? ` <span class="equal-note">*Equal contribution</span>` : "";
+    return `<article class="entry"><div class="entry-year">${escapeHtml(item.year)}</div><div><h3>${escapeHtml(item.title)}</h3><p class="authors">${underlineMe(authors)}${equalNote}</p>${identifier ? `<p class="meta">${escapeHtml(identifier)}${note ? ` <span class="publication-note">${escapeHtml(note)}</span>` : ""}</p>` : ""}${links.length ? `<p class="entry-links">${links.join("")}</p>` : ""}</div></article>`;
   }
 
   function publicationGroupsHtml(items) {

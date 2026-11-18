@@ -58,6 +58,7 @@ main section { scroll-margin-top: 6rem; }
 .publication-note { display: inline-block; margin-left: .5rem; padding: .05rem .45rem; color: var(--red); border: 1px solid currentColor; border-radius: .2rem; font-size: .85em; font-weight: 700; }
 .award-note { display: inline-block; margin-left: .5rem; padding: .05rem .45rem; color: #855d00; background: #fdf6e3; border: 1px solid currentColor; border-radius: .2rem; font-size: .85em; font-weight: 700; text-decoration: none; }
 a.award-note:hover { color: #5c4000; text-decoration: underline; }
+.equal-note { margin-left: .4rem; color: var(--muted); font-size: .85em; white-space: nowrap; }
 .me { color: var(--ink); text-decoration: underline; text-decoration-thickness: .12em; text-underline-offset: .18em; }
 .entry-links { display: flex; flex-wrap: wrap; gap: .4rem .9rem; margin-top: .35rem; }
 .year-group h3 { margin: 2.5rem 0 .5rem; color: var(--red); font-family: var(--sans); font-size: 1.2rem; }
